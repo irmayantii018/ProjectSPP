@@ -1,61 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+<h1>Sistem Informasi Pembayaran SPP Sekolah</h1> 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![image](https://github.com/user-attachments/assets/4ab05c50-19f5-4057-beca-34f008291701)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<br><br>
 
-## Learning Laravel
+<strong>Irmayanti</strong><br>
+<strong>D0222018</strong><br>
+<strong>Framework Web Based</strong><br>
+<strong>2025</strong>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+</div>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+##
+ Role dan Fitur-fiturnya
 
-## Code of Conduct
+### 1. Bendahara
+**Fitur:**
+- **Login**  
+  Bendahara masuk ke sistem menggunakan akun khusus.
+- **Catat pembayaran**  
+  Mencatat pembayaran SPP dari siswa, baik secara langsung maupun lewat konfirmasi.
+- **Lihat laporan**  
+  Melihat dan mencetak laporan keuangan yang berisi data pembayaran dari siswa.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2. Orang Tua
+**Fitur:**
+- **Login**  
+  Orang tua masuk ke sistem menggunakan akun mereka.
+- **Konfirmasi pembayaran**  
+  Mengunggah bukti atau mengonfirmasi bahwa pembayaran sudah dilakukan.
 
-## Security Vulnerabilities
+### 3. Kepala Sekolah
+**Fitur:**
+- **Login**  
+  Kepala sekolah masuk ke sistem untuk memantau data.
+- **Lihat laporan**  
+  Melihat ringkasan laporan keuangan dari semua pembayaran.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Struktur Database
+
+### Tabel `Users` (untuk Bendahara, Orang Tua, Kepala Sekolah)
+| Nama Field | Tipe Data | Keterangan |
+|------------|-----------|------------|
+| Id_user | INT (PK) | ID unik untuk setiap pengguna |
+| Nama | VARCHAR(255) | Nama lengkap pengguna |
+| Username | VARCHAR(100) | Username untuk login |
+| Paswword | VARCHAR(255) | Password terenkripsi |
+| Role | ENUM('bendahara', 'orang_tua', 'kepala_sekolah') | Role pengguna |
+| Created_at | TIMESTAMP | Waktu saat akun dibuat |
+| Update_at | TIMESTAMP | Waktu saat akun terakhir diperbarui |
+
+### Tabel `Pembayaran`
+| Nama Field | Tipe Data | Keterangan |
+|------------|-----------|------------|
+| Id_pembayaran | INT (PK) | ID unik untuk setiap pembayaran |
+| Id_user | INT (FK) | ID orang tua (relasi ke tabel Users) |
+| Jumlah_bayar | DECIMAL(10,2) | Jumlah uang yang dibayarkan |
+| Tanggal_bayar | TIMESTAMP | Tanggal pembayaran |
+| Status | ENUM('lunas', 'belum_lunas') | Status pembayaran |
+| Created_at | TIMESTAMP | Waktu pembayaran dicatat |
+| Updated_at | TIMESTAMP | Waktu pembaruan data pembayaran |
+
+### Tabel `Tagihan`
+| Nama Field | Tipe Data | Keterangan |
+|------------|-----------|------------|
+| Id_Tagihan | INT (PK) | ID unik untuk setiap pembayaran |
+| Id_user | INT (FK) | ID orang tua (relasi ke tabel Users) |
+| Jumlah_tagihan | DECIMAL(10,2) | Jumlah tagihan yang harus dibayar |
+| Bulan | VARCHAR(20) | Bulan untuk tagihan (misal: Januari) |
+| Tahun | INT | Tahun untuk tagihan |
+| Status | ENUM('belum_bayar', 'sudah_bayar') | Status tagihan |
+| Created_at | TIMESTAMP | Waktu tagihan dicatat |
+| Updated_at | TIMESTAMP | Waktu pembaruan data tagihan |
+
+### Tabel `Laporan`
+| Nama Field | Tipe Data | Keterangan |
+|------------|-----------|------------|
+| Id_laporan | INT (PK) | ID unik untuk setiap laporan |
+| Id_user | INT (FK) | ID bendahara atau kepala sekolah (relasi ke tabel Users) |
+| Jenis_Laporan | ENUM('pembayaran', 'tagihan') | Jenis laporan |
+| Deskripsi | TEXT | Deskripsi laporan |
+| Tanggal | TIMESTAMP | Tanggal laporan dibuat |
+| Created_at | TIMESTAMP | Waktu laporan dicatat |
+| Updated_at | TIMESTAMP | Waktu laporan diperbarui |
+
+---
+
+## Relasi Antar Tabel
+
+- **Users**
+  - One-to-many ke `Pembayaran`
+  - One-to-one ke `Tagihan`
+  - One-to-many ke `Laporan`
+
+- **Pembayaran**
+  - Many-to-one ke `Users`
+
+- **Tagihan**
+  - Many-to-one ke `Users`
+
+- **Laporan**
+  - Many-to-one ke `Users`
+
+---
