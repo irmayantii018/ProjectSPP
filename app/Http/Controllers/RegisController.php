@@ -4,72 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman registrasi.
      */
     public function tampil_regis()
     {
-        return view('layouts.regis');
+        return view('autentikasi.register');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Proses kirim data registrasi.
      */
     public function kirim_data(Request $request)
     {
-        // Validasi input
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'role'     => 'required|in:bendahara,orangtua,kepala_sekolah',
         ]);
 
-        // Simpan data ke database
-        $user = User::create([
+        User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            // 'role'     => 'user', // pastikan kolom 'role' ada di tabel users
+            'role'     => $request->role,
         ]);
 
-        // Login user
-        Auth::login($user);
-
-        // Redirect ke halaman utama
-        return redirect('/');
+        // Setelah registrasi, arahkan ke halaman login
+        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
-    public function show(regis $regis)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(regis $regis)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, regis $regis)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(regis $regis)
-    {
-        //
-    }
+    // Fungsi tambahan resource (opsional)
+    public function create() {}
+    public function show($id) {}
+    public function edit($id) {}
+    public function update(Request $request, $id) {}
+    public function destroy($id) {}
 }
